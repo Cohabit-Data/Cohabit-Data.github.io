@@ -1,41 +1,89 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Cohabit privacy policy</title>
-<style>body{font:16px/1.55 -apple-system,system-ui,sans-serif;max-width:40rem;margin:8vh auto;padding:0 1.5rem;color:#1c1b22;background:#f6f5f9}
-h2{margin-top:2rem;font-size:1.15rem}a{color:#3f7d6e}</style></head>
-<body>
-<h1>Cohabit Privacy Policy</h1>
-<p><i>Last updated: October 27, 2026 · Contact: <a href="mailto:cohabitdevdata@gmail.com">cohabitdevdata@gmail.com</a></i></p>
-<p>Cohabit helps you and the people you live with see what you spend and who owes whom. This page says what we collect, why, who sees it, and how to delete it.</p>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Privacy Policy — Cohabit</title>
+<style>:root{--bg:#F7F6FB;--card:#FFFFFF;--card2:#FBFAFF;--border:#EAE7F4;--text:#1C1830;--muted:#5F5973;--faint:#6E6980;--brand:#6D5AE6;--brand-deep:#5744D1;--brand-ink:#5C4CC1;--brand-tint:rgba(109,90,230,.08)}
+@media (prefers-color-scheme:dark){:root{--bg:#120F1B;--card:#1F1B2E;--card2:#2A2540;--border:#352F4C;--text:#F3F1FB;--muted:#A9A3BE;--faint:#8A859B;--brand-ink:#AFA4F1;--brand-tint:rgba(140,124,240,.2)}}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 -apple-system,"SF Pro Text",system-ui,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:640px;margin:0 auto;padding:36px 20px calc(48px + env(safe-area-inset-bottom))}
+header.site{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+header.site .mark{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--brand-deep));display:grid;place-items:center;color:#fff;font-weight:800;font-size:18px}
+header.site a{color:var(--text);text-decoration:none;font-weight:800;font-size:17px}
+header.site nav{margin-left:auto;display:flex;gap:16px}
+header.site nav a{color:var(--brand-ink);font-weight:700;font-size:14px}
+h1{font-size:30px;font-weight:800;letter-spacing:-.01em;margin:0 0 8px;line-height:1.15}
+h2{font-size:19px;font-weight:800;margin:32px 0 8px}
+h3{font-size:16px;font-weight:800;margin:20px 0 6px}
+p,li{color:var(--text)}
+.lede{color:var(--muted);font-size:18px;font-weight:600;margin:0 0 20px}
+.meta{color:var(--faint);font-size:14px;font-weight:600;margin:0 0 20px}
+a{color:var(--brand-ink)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px 20px;box-shadow:0 1px 2px rgba(28,24,48,.05),0 8px 24px rgba(28,24,48,.06);margin-top:16px}
+.card h2{margin-top:0}
+.grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:16px}
+@media (min-width:560px){.grid{grid-template-columns:1fr 1fr}}
+.feature{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px}
+.feature b{display:block;font-size:15px;margin-bottom:4px}
+.feature span{color:var(--muted);font-size:14px;font-weight:600}
+.primary{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:14px;background:linear-gradient(135deg,var(--brand),var(--brand-deep));color:#fff;font-weight:800;text-decoration:none}
+.pill{display:inline-block;padding:4px 10px;border-radius:999px;background:var(--brand-tint);color:var(--brand-ink);font-weight:800;font-size:12px;letter-spacing:.02em;text-transform:uppercase}
+ul{padding-left:20px}
+li{margin:6px 0}
+dl{margin:0}
+dt{font-weight:800;margin-top:14px}
+dd{margin:4px 0 0;color:var(--muted);font-weight:600}
+table{border-collapse:collapse;width:100%;font-size:14px;margin-top:8px}
+th,td{text-align:left;vertical-align:top;padding:8px 10px;border-bottom:1px solid var(--border)}
+th{color:var(--faint);font-weight:800;font-size:12px;letter-spacing:.03em;text-transform:uppercase}
+footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--border);color:var(--faint);font-size:13px;font-weight:600}
+footer a{color:var(--brand-ink)}</style></head>
+<body><main>
+<header class="site"><div class="mark">C</div><a href="../">Cohabit</a><nav><a href="../privacy/">Privacy</a><a href="../security/">Security</a><a href="../support/">Support</a></nav></header>
+<h1>Privacy Policy</h1>
+<p class="meta">Last updated October 27, 2026 · Questions: <a href="mailto:cohabitdevdata@gmail.com">cohabitdevdata@gmail.com</a></p>
+<p class="lede">Cohabit helps you and the people you live with see what you spend and who owes whom. This policy explains what we collect, why, who can see it, and how to delete it.</p>
+
 <h2>What we collect</h2>
 <ul>
 <li><b>Your account:</b> your name, and either your Sign in with Apple identifier or your email address.</li>
-<li><b>Your household:</b> who is in it, your split, budgets, goals, lists, tags and shared tabs you create, and the ways you said you can be paid (a Venmo, Cash App or PayPal name).</li>
-<li><b>Your photo, if you add one:</b> shown to the people in your household in place of your initial. Remove it any time in Settings.</li>
-<li><b>Your Pip:</b> its colour, what it wears, its room, its level and coins, the days you opened Cohabit, and your Pip code — kept so it follows you to a new phone and so friends you add can visit it.</li>
-<li><b>Notifications (if you allow them):</b> a token from Apple that lets our server send this phone a notification. Notifications say a name, and for a question about a charge, its merchant and amount.</li>
-<li><b>Crash and hang reports (only if you share them):</b> Apple's diagnostic reports stay on your phone unless you tap Share diagnostics. They contain no names or money.</li>
-<li><b>Bank data you choose to connect, through Plaid:</b> your accounts' names and last four digits; transactions (date, amount, merchant, category, and what Plaid adds about the merchant: its location, website, logo and category code, the currency, and a payment's method and reference); payments made to your credit cards (from the cards' own transactions). We do not collect bank passwords, account or routing numbers, the account holder's name, or income or identity data.</li>
-<li><b>How you use Cohabit:</b> which pages you open and a few things you do (for example, that you linked a bank or settled up, or that something went wrong on screen), with the app and iOS version. Never amounts, merchants, names, notes or anything you typed. Kept by Cohabit itself — no analytics company — for 90 days, then only as daily totals. Turn it off any time in <b>Settings → Privacy → Help improve Cohabit</b>.</li>
+<li><b>Your household:</b> who is in it, how you split costs, your budgets, goals, lists, tags and shared tabs, and the payment handles you choose to share (a Venmo, Cash App or PayPal name).</li>
+<li><b>Your photo, if you add one:</b> shown to the people in your household in place of your initial. You can remove it at any time in Settings.</li>
+<li><b>Your Pip</b> (the companion character in the app): its colour, outfit, room, level and coins, the days you opened Cohabit, and your Pip code, so it follows you to a new phone and friends you add can visit it.</li>
+<li><b>Notifications, if you allow them:</b> a token from Apple that lets our server send notifications to your phone. A notification names the person involved and, for a question about a charge, that charge's merchant and amount.</li>
+<li><b>Crash and hang reports, only if you share them:</b> Apple's diagnostic reports stay on your phone unless you choose to send them to us. They contain no names or financial details.</li>
+<li><b>Bank data you choose to connect, through Plaid:</b> the names and last four digits of your accounts; transactions (date, amount, merchant, category, and the merchant details Plaid provides, such as location, website, logo and category code, the currency, and a payment's method and reference); and payments made to your credit cards, taken from the cards' own transactions. We do not collect bank passwords, account or routing numbers, the account holder's name, income or identity data.</li>
+<li><b>How you use Cohabit:</b> which screens you open and a few actions you take (for example, that you connected a bank or settled up, or that an error appeared), with the app and iOS version. Never amounts, merchants, names, notes or anything you typed. This is kept by Cohabit itself, with no third-party analytics service, for 90 days and then only as daily totals. You can turn it off at any time in <b>Settings → Privacy &amp; lock → Help improve Cohabit</b>.</li>
 </ul>
+
 <h2>How bank connections work</h2>
-<p>You connect a bank through <b>Plaid</b>, which shows its own screens and consent. Your bank sign-in goes to Plaid (or your bank), never to Cohabit. Plaid's handling of your data is described in the <a href="https://plaid.com/legal/#end-user-privacy-policy">Plaid End User Privacy Policy</a>. Plaid gives Cohabit an access key, which we store encrypted on our server and never on your phone.</p>
-<h2>How we use it</h2>
-<p>Only to show you and your household your own spending, budgets and balances, to suggest categories (worked out on your phone), to keep your phones in sync, and — from how Cohabit is used — to see what's working and what isn't so we can improve it. <b>We do not sell, rent or share your data, and we do not use it for advertising.</b></p>
+<p>You connect a bank through <b>Plaid</b>, which presents its own screens and consent. Your bank sign-in goes to Plaid or to your bank, never to Cohabit. Plaid's handling of your data is described in the <a href="https://plaid.com/legal/#end-user-privacy-policy">Plaid End User Privacy Policy</a>. Plaid gives Cohabit an access key for each connection, which we store encrypted on our server and never on your phone.</p>
+
+<h2>How we use your data</h2>
+<p>We use your data only to show you and your household your own spending, budgets and balances; to suggest categories (worked out on your phone); to keep your phones in sync; and, from the usage information described above, to understand what is working and what is not so that we can improve the app. <b>We do not sell, rent or share your data, and we do not use it for advertising.</b></p>
+
 <h2>Who can see what</h2>
 <ul>
-<li>People in <b>your household</b> see shared charges and what you've marked as theirs. They see your cards and personal charges only if you turn on <b>Share my cards and charges</b>, and never a charge you mark <b>Keep private</b>.</li>
-<li><b>Friends on a shared tab</b> you send a link to see that tab — its expenses, payments and who owes whom — and, when they owe you, the Venmo, Cash App or PayPal name you gave. Nothing else of yours.</li>
-<li><b>Pip friends</b> — people you've swapped Pip codes with, and the people you live with — see your first name and your Pip: its look, its room, its level, the days in the last five weeks you opened Cohabit, and the hellos (a wave, a hug, a high five, good vibes) you send each other. Never your money, coins or anything from your household. Either of you can remove the other.</li>
-<li>People in <b>other households</b> see nothing else of yours.</li>
-<li>Our service providers store data for us: <b>Supabase</b> (database and sign-in, United States), <b>Plaid</b> (bank connections), <b>Apple</b> (Sign in with Apple, notifications, TestFlight).</li>
+<li><b>People in your household</b> see shared charges and the charges you mark as theirs. They see your cards and personal charges only if you turn on <b>Share my cards and personal charges</b>, and never a charge you mark <b>Keep private</b>.</li>
+<li><b>Friends on a shared tab</b> you send a link to can see that tab: its expenses, payments and who owes whom, and, when they owe you, the payment handle you provided. Nothing else of yours.</li>
+<li><b>Pip friends</b> (people you have exchanged Pip codes with, and the people you live with) see your first name and your Pip: its look, room and level, the days in the last five weeks you opened Cohabit, and the greetings you send each other. Never your money, your coins or anything from your household. Either of you can remove the other at any time.</li>
+<li><b>Other households</b> see nothing of yours.</li>
+<li><b>Our service providers</b> store data on our behalf: <b>Supabase</b> (database and sign-in, United States), <b>Plaid</b> (bank connections) and <b>Apple</b> (Sign in with Apple, notifications and TestFlight).</li>
 </ul>
+
 <h2>Security</h2>
-<p>Encryption in transit (TLS) and at rest; bank access keys encrypted separately; access rules enforced by the database; an optional Face ID lock. See our security practices.</p>
+<p>Data is encrypted in transit and at rest; bank access keys are encrypted separately; access rules are enforced by the database; and an optional Face ID, Touch ID or passcode lock protects the app on your phone. Our <a href="../security/">security page</a> describes these practices in more detail.</p>
+
 <h2>Keeping and deleting your data</h2>
-<p>We keep your data while you use Cohabit. Something you delete stays in <b>Recently deleted</b> for 30 days so it can be put back, then it is removed from our server too. <b>Settings → Account → Export charges</b> gives you a spreadsheet of everything you can see. You can unlink a bank at any time (Settings → Banks). <b>Settings → Account → Delete my account</b> disconnects your banks at Plaid, deletes your cards and charges that were yours alone, and deletes your sign-in. Shared charges stay in your household's history (under "Former member") because they are part of what others owe or are owed; if you are the last person in the household, everything is deleted.</p>
+<p>We keep your data for as long as you use Cohabit. Anything you delete stays in <b>Recently deleted</b> for 30 days so it can be restored, and is then permanently removed from our server. <b>Settings → Account → Export charges</b> gives you a spreadsheet of every charge you can see. You can unlink a bank at any time under <b>Settings → Banks &amp; cards</b>.</p>
+<p><b>Settings → Account → Delete my account</b> disconnects your banks at Plaid, deletes your cards, your sign-in and the charges that were yours alone, and takes effect immediately. Charges you shared remain in your household's history, attributed to a former member, because they are part of what others owe or are owed. If you are the last person in the household, everything is deleted.</p>
+
 <h2>Children</h2>
-<p>Cohabit is not for people under 18.</p>
-<h2>Changes</h2>
-<p>We'll update this page and the date above, and tell you in the app about significant changes.</p>
-</body></html>
+<p>Cohabit is not intended for anyone under 18, and we do not knowingly collect data from children.</p>
+
+<h2>Changes to this policy</h2>
+<p>When this policy changes, we will update the date above and tell you in the app about any significant change.</p>
+
+<h2>Contact</h2>
+<p>Questions or requests about your data: <a href="mailto:cohabitdevdata@gmail.com">cohabitdevdata@gmail.com</a>.</p>
+<footer>© 2026 Cohabit · <a href="../privacy/">Privacy policy</a> · <a href="../security/">Security</a> · <a href="../support/">Support</a> · <a href="mailto:cohabitdevdata@gmail.com">cohabitdevdata@gmail.com</a></footer>
+</main></body></html>

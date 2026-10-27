@@ -8,6 +8,7 @@ Four pages Apple and Plaid need before real banks and outside testers:
 | `/plaid/oauth/` | The redirect URI registered with Plaid; shown only if the app didn't open. |
 | `/privacy/` | Privacy policy URL for App Store Connect and Plaid (made from `PRIVACY.md`). |
 | `/support/` | Support URL for App Store Connect. |
+| `/security/` | A public summary of `SECURITY.md` (the policy's version is named on the page; update both together). |
 | `/invite/` | v72: where household and Pip-friend invites land (`#join=CODE`, `#pip=CODE`): how to get Cohabit (the Get-the-app link in `tab/config.js`), then the code to enter, and a button that opens the app if it's there. |
 | `/tab/` | v44: a friend's view of a shared tab (no app): what's owed, add what they paid. Fill in `tab/config.js` (project ref, the Get-the-app link). The app needs `COHABIT_SITE_HOST` set to this site's host. |
 

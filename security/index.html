@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Security — Cohabit</title>
+<style>:root{--bg:#F7F6FB;--card:#FFFFFF;--card2:#FBFAFF;--border:#EAE7F4;--text:#1C1830;--muted:#5F5973;--faint:#6E6980;--brand:#6D5AE6;--brand-deep:#5744D1;--brand-ink:#5C4CC1;--brand-tint:rgba(109,90,230,.08)}
+@media (prefers-color-scheme:dark){:root{--bg:#120F1B;--card:#1F1B2E;--card2:#2A2540;--border:#352F4C;--text:#F3F1FB;--muted:#A9A3BE;--faint:#8A859B;--brand-ink:#AFA4F1;--brand-tint:rgba(140,124,240,.2)}}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 -apple-system,"SF Pro Text",system-ui,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:640px;margin:0 auto;padding:36px 20px calc(48px + env(safe-area-inset-bottom))}
+header.site{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+header.site .mark{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--brand-deep));display:grid;place-items:center;color:#fff;font-weight:800;font-size:18px}
+header.site a{color:var(--text);text-decoration:none;font-weight:800;font-size:17px}
+header.site nav{margin-left:auto;display:flex;gap:16px}
+header.site nav a{color:var(--brand-ink);font-weight:700;font-size:14px}
+h1{font-size:30px;font-weight:800;letter-spacing:-.01em;margin:0 0 8px;line-height:1.15}
+h2{font-size:19px;font-weight:800;margin:32px 0 8px}
+h3{font-size:16px;font-weight:800;margin:20px 0 6px}
+p,li{color:var(--text)}
+.lede{color:var(--muted);font-size:18px;font-weight:600;margin:0 0 20px}
+.meta{color:var(--faint);font-size:14px;font-weight:600;margin:0 0 20px}
+a{color:var(--brand-ink)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px 20px;box-shadow:0 1px 2px rgba(28,24,48,.05),0 8px 24px rgba(28,24,48,.06);margin-top:16px}
+.card h2{margin-top:0}
+.grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:16px}
+@media (min-width:560px){.grid{grid-template-columns:1fr 1fr}}
+.feature{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px}
+.feature b{display:block;font-size:15px;margin-bottom:4px}
+.feature span{color:var(--muted);font-size:14px;font-weight:600}
+.primary{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:14px;background:linear-gradient(135deg,var(--brand),var(--brand-deep));color:#fff;font-weight:800;text-decoration:none}
+.pill{display:inline-block;padding:4px 10px;border-radius:999px;background:var(--brand-tint);color:var(--brand-ink);font-weight:800;font-size:12px;letter-spacing:.02em;text-transform:uppercase}
+ul{padding-left:20px}
+li{margin:6px 0}
+dl{margin:0}
+dt{font-weight:800;margin-top:14px}
+dd{margin:4px 0 0;color:var(--muted);font-weight:600}
+table{border-collapse:collapse;width:100%;font-size:14px;margin-top:8px}
+th,td{text-align:left;vertical-align:top;padding:8px 10px;border-bottom:1px solid var(--border)}
+th{color:var(--faint);font-weight:800;font-size:12px;letter-spacing:.03em;text-transform:uppercase}
+footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--border);color:var(--faint);font-size:13px;font-weight:600}
+footer a{color:var(--brand-ink)}</style></head>
+<body><main>
+<header class="site"><div class="mark">C</div><a href="../">Cohabit</a><nav><a href="../privacy/">Privacy</a><a href="../security/">Security</a><a href="../support/">Support</a></nav></header>
+<h1>How we protect your data</h1>
+<p class="meta">Summary of the Cohabit Information Security Policy, version 1.2 · Updated October 27, 2026</p>
+<p class="lede">Cohabit handles card transactions, so we treat security as part of the product, not an afterthought. This page summarises what we do; the full policy is available to partners and reviewers on request.</p>
+<div class="card"><h2>What we collect, and what we don't</h2>
+<p>Cohabit reads <b>transactions only</b>: the date, amount, merchant and category of charges on the cards you connect, plus the account name and its last four digits. We never see your bank username or password, and we do not collect account or routing numbers, balances, identity documents or income. Cohabit cannot move money.</p></div>
+<div class="card"><h2>Bank connections</h2>
+<p>Connections are made through <a href="https://plaid.com">Plaid</a>, on Plaid's own screens. Plaid gives Cohabit an access key for each connection; that key is encrypted with its own key (AES-256-GCM) before it is stored, lives only on our server, and is never sent to your phone. Unlinking a bank in the app removes the connection at Plaid.</p></div>
+<div class="card"><h2>Encryption</h2>
+<ul>
+<li><b>In transit:</b> every connection uses TLS 1.2 or newer. The app refuses unencrypted connections.</li>
+<li><b>At rest:</b> our database and its backups are encrypted (AES-256), and bank access keys are encrypted a second time as described above.</li>
+<li><b>On your phone:</b> saved data is protected by iOS data protection and excluded from device backups.</li>
+</ul></div>
+<div class="card"><h2>Who can see what</h2>
+<p>Access rules are enforced by the database itself: a person can only read their own household, and only the charges they are allowed to see. People outside your household see nothing of yours unless you share a specific tab with them. Our server records who changed each record and when.</p></div>
+<div class="card"><h2>Signing in</h2>
+<p>You sign in with Apple, which requires two-factor authentication, or with a one-time code sent to your email. There are no passwords to reuse or leak. An optional Face ID, Touch ID or passcode lock, on by default, protects the app on your phone.</p></div>
+<div class="card"><h2>How we run things</h2>
+<ul>
+<li>Cohabit runs on managed cloud infrastructure (Supabase on AWS, in the United States). We operate no servers of our own.</li>
+<li>Administrative access requires multi-factor authentication and is reviewed every quarter.</li>
+<li>Every change to the code is tested automatically before release, including the database access rules.</li>
+<li>Dependencies are monitored for known vulnerabilities and patched on defined timelines.</li>
+<li>We review risks and this policy every six months, and after any incident.</li>
+</ul></div>
+<div class="card"><h2>Your data, your choice</h2>
+<p>You can export your charges, unlink a bank, or delete your account from inside the app. Deleted items are kept for 30 days so they can be restored, then permanently removed. We never sell, rent or share your data, and we do not use it for advertising.</p></div>
+<div class="card"><h2>If something goes wrong</h2>
+<p>We contain a confirmed incident within an hour (rotating keys, revoking sessions and disconnecting banks as needed) and notify affected people without undue delay. To report a security concern, email <a href="mailto:cohabitdevdata@gmail.com">cohabitdevdata@gmail.com</a> with "Security" in the subject line.</p></div>
+<footer>© 2026 Cohabit · <a href="../privacy/">Privacy policy</a> · <a href="../security/">Security</a> · <a href="../support/">Support</a> · <a href="mailto:cohabitdevdata@gmail.com">cohabitdevdata@gmail.com</a></footer>
+</main></body></html>
