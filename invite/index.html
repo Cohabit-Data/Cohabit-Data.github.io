@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<title>You're invited · Cohabit</title>
+<!-- v72: where an invite lands — a household invite (#join=CODE) or a Pip friend (#pip=CODE).
+     Works for someone without Cohabit: how to get it, then the code. Nothing is sent anywhere;
+     the code stays in the page (after the #, so it never reaches a server's logs). -->
+<style>
+  :root {
+    --bg: #FFFFFF; --card: #FFFFFF; --card2: #FBFAFF; --border: #EAE7F4; --text: #1C1830; --muted: #5F5973; --faint: #6E6980;
+    --brand: #6D5AE6; --brand-deep: #5744D1; --brand-ink: #5C4CC1; --brand-tint: rgba(109,90,230,.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #120F1B; --card: #1F1B2E; --card2: #2A2540; --border: #352F4C; --text: #F3F1FB; --muted: #A9A3BE; --faint: #8A859B;
+            --brand-ink: #AFA4F1; --brand-tint: rgba(140,124,240,.2); }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.45 -apple-system, "SF Pro Text", system-ui, Segoe UI, Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+  main { max-width: 480px; margin: 0 auto; padding: 28px 16px calc(32px + env(safe-area-inset-bottom)); }
+  .badge { width: 56px; height: 56px; border-radius: 18px; display: grid; place-items: center; font-size: 28px; background: var(--brand-tint); }
+  h1 { font-size: 26px; font-weight: 800; letter-spacing: -.01em; margin: 16px 0 4px; }
+  .sub { color: var(--muted); font-weight: 600; margin: 0; }
+  .card { margin-top: 20px; background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 4px 16px; box-shadow: 0 1px 2px rgba(28,24,48,.05), 0 8px 24px rgba(28,24,48,.06); }
+  .step { display: flex; gap: 12px; padding: 14px 0; border-top: 1px solid var(--border); align-items: flex-start; }
+  .step:first-child { border-top: 0; }
+  .n { width: 26px; height: 26px; border-radius: 50%; background: var(--brand); color: #fff; font-weight: 800; font-size: 13px; display: grid; place-items: center; flex: 0 0 auto; margin-top: 1px; }
+  .step b { display: block; font-size: 15px; }
+  .step span { color: var(--muted); font-size: 13px; font-weight: 600; }
+  .code { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; padding: 12px 14px; border-radius: 14px; background: var(--card2); border: 1px solid var(--border); }
+  .code tt { font: 800 22px/1 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: .08em; }
+  .pill { appearance: none; border: 1.5px solid var(--border); background: var(--card); color: var(--brand-ink); border-radius: 12px; padding: 0 12px; height: 36px; font: inherit; font-weight: 800; font-size: 13px; cursor: pointer; }
+  .primary { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 50px; margin-top: 12px; border-radius: 16px; background: linear-gradient(135deg, var(--brand), var(--brand-deep)); color: #fff; font-weight: 800; text-decoration: none; }
+  .secondary { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 48px; margin-top: 10px; border-radius: 16px; border: 1.5px solid var(--border); color: var(--brand-ink); font-weight: 800; text-decoration: none; }
+  .fine { color: var(--faint); font-size: 12px; font-weight: 600; text-align: center; margin-top: 18px; }
+  .fine a { color: var(--brand-ink); }
+  .toast { position: fixed; left: 16px; right: 16px; top: 12px; background: var(--text); color: var(--bg); padding: 12px 14px; border-radius: 14px; font-weight: 700; font-size: 13px; opacity: 0; transform: translateY(-8px); transition: .2s; pointer-events: none; text-align: center; }
+  .toast.on { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+<main id="app"></main>
+<div class="toast" id="toast" role="status"></div>
+<script src="../tab/config.js"></script>
+<script>
+(function () {
+  var cfg = window.COHABIT || {};
+  var getApp = cfg.getAppUrl && cfg.getAppUrl.indexOf("XXXXXXXX") < 0 ? cfg.getAppUrl : null;
+  var h = new URLSearchParams(location.hash.slice(1));
+  var clean = function (s) { return (s || "").toUpperCase().replace(/[^A-HJ-NP-Z2-9]/g, "").slice(0, 8); };
+  var join = clean(h.get("join")), pip = clean(h.get("pip"));
+  var code = join || pip, kind = join ? "join" : (pip ? "pip" : null);
+  var pretty = code.length === 8 ? code.slice(0, 4) + "-" + code.slice(4) : code;
+  var esc = function (s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+  var app = document.getElementById("app");
+
+  if (!kind || code.length !== 8) {
+    app.innerHTML = '<div class="badge">🏠</div><h1>Cohabit</h1><p class="sub">Money you share, kept simple: who paid, who owes, and what’s left this month.</p>' +
+      (getApp ? '<a class="primary" href="' + esc(getApp) + '">Get Cohabit</a>' : '') +
+      '<p class="fine">This invite link is missing its code. Ask for a new one.</p>';
+    return;
+  }
+
+  var words = kind === "join"
+    ? { badge: "🏠", title: "You’re invited to share a home in Cohabit", sub: "Track what you share, see who owes what, and settle up in a tap. Your own spending stays yours.",
+        last: "Open Cohabit, tap <b>Join with a code</b>", open: "cohabit://join/" + code, openLabel: "I have Cohabit — open the invite" }
+    : { badge: "🐣", title: "Come be Pip friends", sub: "Visit each other’s Pip, send a hug or a high five, and keep a streak going. Friends never see anyone’s money.",
+        last: "In Cohabit, go to <b>Goals → Pip</b> and add a friend", open: "cohabit://pip/" + code, openLabel: "I have Cohabit — add this friend" };
+
+  app.innerHTML =
+    '<div class="badge" aria-hidden="true">' + words.badge + '</div>' +
+    '<h1>' + words.title + '</h1><p class="sub">' + words.sub + '</p>' +
+    '<div class="card">' +
+      '<div class="step"><div class="n">1</div><div><b>Get Cohabit</b><span>' + (getApp ? 'Free on iPhone. During the pilot it comes through Apple’s TestFlight app.' : 'Ask the person who sent this for the download link.') + '</span>' +
+        (getApp ? '<a class="primary" href="' + esc(getApp) + '">Get Cohabit</a>' : '') + '</div></div>' +
+      '<div class="step"><div class="n">2</div><div><b>' + words.last.replace(/<b>|<\/b>/g, "") + '</b><span>And enter this code:</span>' +
+        '<div class="code"><tt id="code">' + esc(pretty) + '</tt><button class="pill" id="copy" type="button">Copy</button></div></div></div>' +
+    '</div>' +
+    '<a class="secondary" href="' + esc(words.open) + '">' + words.openLabel + '</a>' +
+    '<p class="fine">Not expecting this? You can ignore it — nothing happens unless you enter the code.</p>';
+
+  var toast = document.getElementById("toast");
+  document.getElementById("copy").addEventListener("click", function () {
+    var done = function () { toast.textContent = "Code copied"; toast.classList.add("on"); setTimeout(function () { toast.classList.remove("on"); }, 1600); };
+    if (navigator.clipboard) navigator.clipboard.writeText(code).then(done, done); else done();
+  });
+})();
+</script>
+</body>
+</html>

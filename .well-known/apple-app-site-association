@@ -1,0 +1,14 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["4NLUL4JV67.com.jordanosnato.cohabit"],
+        "components": [
+          { "/": "/plaid/*", "comment": "Plaid sends people back here after signing in at an OAuth bank" },
+          { "/": "/tab/*", "exclude": true, "comment": "a friend's tab page stays on the web, app or no app" },
+          { "/": "/invite/*", "exclude": true, "comment": "v72: an invite page shows how to get the app, then the code" }
+        ]
+      }
+    ]
+  }
+}
