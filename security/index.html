@@ -40,33 +40,27 @@ footer a{color:var(--brand-ink)}</style></head>
 <body><main>
 <header class="site"><div class="mark">C</div><a href="../">Cohabit</a><nav><a href="../privacy/">Privacy</a><a href="../security/">Security</a><a href="../support/">Support</a></nav></header>
 <h1>How we protect your data</h1>
-<p class="meta">Summary of the Cohabit Information Security Policy, version 1.2 · Updated October 27, 2026</p>
-<p class="lede">Cohabit handles card transactions, so we treat security as part of the product, not an afterthought. This page summarises what we do; the full policy is available to partners and reviewers on request.</p>
-<div class="card"><h2>What we collect, and what we don't</h2>
-<p>Cohabit reads <b>transactions only</b>: the date, amount, merchant and category of charges on the cards you connect, plus the account name and its last four digits. We never see your bank username or password, and we do not collect account or routing numbers, balances, identity documents or income. Cohabit cannot move money.</p></div>
-<div class="card"><h2>Bank connections</h2>
-<p>Connections are made through <a href="https://plaid.com">Plaid</a>, on Plaid's own screens. Plaid gives Cohabit an access key for each connection; that key is encrypted with its own key (AES-256-GCM) before it is stored, lives only on our server, and is never sent to your phone. Unlinking a bank in the app removes the connection at Plaid.</p></div>
-<div class="card"><h2>Encryption</h2>
-<ul>
-<li><b>In transit:</b> every connection uses TLS 1.2 or newer. The app refuses unencrypted connections.</li>
-<li><b>At rest:</b> our database and its backups are encrypted (AES-256), and bank access keys are encrypted a second time as described above.</li>
-<li><b>On your phone:</b> saved data is protected by iOS data protection and excluded from device backups.</li>
-</ul></div>
-<div class="card"><h2>Who can see what</h2>
-<p>Access rules are enforced by the database itself: a person can only read their own household, and only the charges they are allowed to see. People outside your household see nothing of yours unless you share a specific tab with them. Our server records who changed each record and when.</p></div>
+<p class="meta">Updated October 27, 2026</p>
+<p class="lede">Cohabit handles card transactions, so security is part of how the app is built. Here is what we do, in plain terms.</p>
+<div class="card"><h2>We see transactions only</h2>
+<p>Cohabit reads the date, amount, merchant and category of charges on the cards you connect, plus the account name and last four digits. We never see your bank username or password, and we do not collect account numbers, balances, identity documents or income. Cohabit cannot move money.</p></div>
+<div class="card"><h2>Bank connections go through Plaid</h2>
+<p>You connect a bank on <a href="https://plaid.com">Plaid</a>'s own screens. Plaid gives Cohabit an access key for the connection; that key is encrypted again before it is stored, stays on our server, and is never sent to your phone. Unlinking a bank in the app removes the connection at Plaid.</p></div>
+<div class="card"><h2>Everything is encrypted</h2>
+<p>Every connection uses TLS 1.2 or newer. Our database and backups are encrypted at rest (AES-256), and bank access keys are encrypted a second time. On your phone, saved data is protected by iOS and left out of device backups.</p></div>
+<div class="card"><h2>Only your household can see your data</h2>
+<p>Access rules are enforced by the database itself: a person can only read their own household, and only the charges they are allowed to see. People outside your household see nothing of yours unless you share a specific tab with them.</p></div>
 <div class="card"><h2>Signing in</h2>
-<p>You sign in with Apple, which requires two-factor authentication, or with a one-time code sent to your email. There are no passwords to reuse or leak. An optional Face ID, Touch ID or passcode lock, on by default, protects the app on your phone.</p></div>
+<p>You sign in with Apple, which requires two-factor authentication, or with a one-time code sent to your email. There are no passwords to leak. A Face ID, Touch ID or passcode lock, on by default, protects the app on your phone.</p></div>
 <div class="card"><h2>How we run things</h2>
 <ul>
-<li>Cohabit runs on managed cloud infrastructure (Supabase on AWS, in the United States). We operate no servers of our own.</li>
-<li>Administrative access requires multi-factor authentication and is reviewed every quarter.</li>
-<li>Every change to the code is tested automatically before release, including the database access rules.</li>
-<li>Dependencies are monitored for known vulnerabilities and patched on defined timelines.</li>
-<li>We review risks and this policy every six months, and after any incident.</li>
+<li>Cohabit runs on managed cloud infrastructure in the United States; we operate no servers of our own.</li>
+<li>Administrative access requires multi-factor authentication and is reviewed regularly.</li>
+<li>Every code change is tested automatically before release, and dependencies are monitored for known vulnerabilities.</li>
+<li>We review our security policy and risks every six months, and after any incident.</li>
 </ul></div>
 <div class="card"><h2>Your data, your choice</h2>
-<p>You can export your charges, unlink a bank, or delete your account from inside the app. Deleted items are kept for 30 days so they can be restored, then permanently removed. We never sell, rent or share your data, and we do not use it for advertising.</p></div>
-<div class="card"><h2>If something goes wrong</h2>
-<p>We contain a confirmed incident within an hour (rotating keys, revoking sessions and disconnecting banks as needed) and notify affected people without undue delay. To report a security concern, email <a href="mailto:cohabitdevdata@gmail.com">cohabitdevdata@gmail.com</a> with "Security" in the subject line.</p></div>
-<footer>© 2026 Cohabit · <a href="../privacy/">Privacy policy</a> · <a href="../security/">Security</a> · <a href="../support/">Support</a> · <a href="mailto:cohabitdevdata@gmail.com">cohabitdevdata@gmail.com</a></footer>
+<p>You can export your charges, unlink a bank or delete your account from inside the app. We never sell, rent or share your data, and we do not use it for advertising.</p>
+<p>To report a security concern, email <a href="mailto:cohabitdevdata@gmail.com">cohabitdevdata@gmail.com</a> with "Security" in the subject line.</p></div>
+<footer>© 2026 Cohabit · <a href="../privacy/">Privacy</a> · <a href="../security/">Security</a> · <a href="../support/">Support</a> · <a href="mailto:cohabitdevdata@gmail.com">cohabitdevdata@gmail.com</a></footer>
 </main></body></html>
