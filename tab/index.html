@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>Shared tab · Cohabit</title>
+<title>Tab · Cohabit</title>
 <style>
   :root {
     --bg: #FFFFFF; --card: #FFFFFF; --card2: #FBFAFF; --border: #EAE7F4; --text: #1C1830; --muted: #5F5973; --faint: #6E6980;
@@ -68,6 +68,8 @@
   .cta a.ghost-link { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; font-weight: 800; color: var(--brand-deep); text-decoration: none; }
   .square { text-align: center; padding: 18px 0 8px; }
   .square b { display: block; font-size: 18px; }
+  .cta .steps { margin: 14px 0 0; padding: 12px 0 0; border-top: 1px solid var(--border); text-align: left; color: var(--muted); font-size: 13px; font-weight: 600; }
+  .cta .steps b { color: var(--text); }
 </style>
 </head>
 <body>
@@ -76,8 +78,8 @@
 
 <dialog id="dlg">
   <form method="dialog" id="form">
-    <h2 id="dlgTitle">Add an expense</h2>
-    <label for="fTitle">What was it</label>
+    <h2 id="dlgTitle">New expense</h2>
+    <label for="fTitle">What was it?</label>
     <input id="fTitle" maxlength="60" placeholder="e.g. Groceries" autocomplete="off" required>
     <label for="fAmount">Amount</label>
     <div class="money"><span>$</span><input id="fAmount" inputmode="decimal" placeholder="0.00" required></div>
@@ -104,7 +106,7 @@
     <div class="pays" id="payApps"></div>
     <label for="pAmount">Amount</label>
     <div class="money"><span>$</span><input id="pAmount" inputmode="decimal" placeholder="0.00" required></div>
-    <p class="hint" id="payHint">Cohabit never moves money — pay however you usually do, then record it here so the tab knows.</p>
+    <p class="hint" id="payHint">Cohabit never moves money. Pay however you usually do, then record it here so the tab knows.</p>
     <div class="actions">
       <span style="flex:1"></span>
       <button type="button" class="pill" id="pCancel">Cancel</button>
@@ -117,6 +119,9 @@
 <script>
 (() => {
   const cfg = window.COHABIT || {};
+  // v98: no placeholder download link (it led nowhere) — the same check as the invite page
+  const getApp = cfg.getAppUrl && cfg.getAppUrl.indexOf("XXXXXXXX") < 0 ? cfg.getAppUrl : null;
+  const ios = /iPhone|iPad|iPod/.test(navigator.userAgent);
   const token = (new URLSearchParams(location.hash.replace(/^#/, "")).get("t") || "").trim();
   const app = document.getElementById("app");
   const colors = ["#F06A6A", "#2AB3A6", "#3B82F6", "#F0A43A", "#E25CA4", "#3FB950", "#8B5CF6", "#38BDF8"];
@@ -153,13 +158,15 @@
     // v69: where you stand, big — then each person, with a way to settle
     const hero = mine.length
       ? `<div class="hero"><div class="k">${net < 0 ? "You owe" : net > 0 ? "You’re owed" : "Even, overall"}</div><div class="v">${money(Math.abs(net))}</div>
-           <div class="l">${owe && owed ? `You owe ${money(owe)} · you’re owed ${money(owed)} — each is settled with its own person`
+           <div class="l">${owe && owed ? `You owe ${money(owe)} and you’re owed ${money(owed)}. Each is settled with its own person.`
              : mine.length === 1 ? (mine[0].from === you ? "to " + esc(nameOf(mine[0].to)) : "from " + esc(nameOf(mine[0].from))) : "across " + mine.length + " people on the tab"}</div></div>`
       : `<div class="card"><div class="square"><b>You’re square</b><span class="line">Nothing owed either way on ${esc(state.tab.name)}.</span></div></div>`;
     const balanceRows = mine.map((p, i) => {
       const iOwe = p.from === you;
       const who = iOwe ? p.to : p.from;
-      const btn = finished ? "" : `<div class="acts"><button class="pill${iOwe ? " filled" : ""}" data-settle="${i}">${iOwe ? "I paid" : "Got it"}</button></div>`;
+      // v103: Remind someone who owes you — a push when they have Cohabit, else a message you send
+      const remind = iOwe ? "" : `<button class="pill" data-remind="${i}">Remind</button>`;
+      const btn = finished ? "" : `<div class="acts">${remind}<button class="pill${iOwe ? " filled" : ""}" data-settle="${i}">${iOwe ? "I paid" : "Got it"}</button></div>`;
       return `<div class="row"><div class="t"><div class="title">${iOwe ? "You owe " + esc(nameOf(who)) : esc(nameOf(who)) + " owes you"}</div>
               <div class="line">${iOwe && state.pay && state.pay[who] ? "Pay in one tap" : iOwe ? "Pay them however you usually do" : "Once they’ve paid you"}</div></div>
               <div class="amt ${iOwe ? "over" : "good"}">${money(p.amountCents)}</div>${btn}</div>`;
@@ -171,19 +178,22 @@
          ${x.mine && !finished && lastPaid && x.id === lastPaid.id ? `<button class="pill" data-unsettle="${esc(x.id)}">Take back</button>` : ""}</div>`).join("");
     const otherRows = others.map((p) => `<div class="row"><div class="t"><div class="title">${esc(nameOf(p.from))} owes ${esc(nameOf(p.to))}</div></div><div class="amt">${money(p.amountCents)}</div></div>`).join("");
     // Finished, or someone has already settled up: the expenses are fixed (the app's rule too).
-    const locked = state.tab.isArchived || (state.settleUps || []).length > 0;
+    // v102: an ongoing tab goes on after a settle-up — only what a settle-up covered is fixed.
+    const ongoing = state.tab.kind === "ongoing";
+    const locked = state.tab.isArchived || (!ongoing && (state.settleUps || []).length > 0);
     const expenseRows = state.expenses.length ? state.expenses.map((x) => {
       const share = x.parts[you] || 0;
-      const line = `${esc(name(x.paidBy))} paid · ${dateShort(x.date)}` + (x.card ? " · from their card" : "") + (share ? ` · your share ${money(share)}` : "") + (x.note ? ` · ${esc(x.note)}` : "");
+      const line = `${esc(name(x.paidBy))} paid · ${dateShort(x.date)}` + (x.card ? " · from their card" : "") + (share ? ` · your share ${money(share)}` : "") + (x.fixed ? " · settled" : "") + (x.note ? ` · ${esc(x.note)}` : "");
       // v86: one added from a card in the app changes there
-      const btn = x.mine && !locked && !x.card ? `<button class="pill" data-edit="${esc(x.id)}">Edit</button>` : "";
+      const btn = x.mine && !locked && !x.fixed && !x.card ? `<button class="pill" data-edit="${esc(x.id)}">Edit</button>` : "";
       return `<div class="row"><div class="t"><div class="title">${esc(x.title)}${x.mine ? '<span class="you">yours</span>' : ""}</div><div class="line">${line}</div></div><div class="amt">${money(x.amountCents)}</div>${btn}</div>`;
     }).join("") : `<div class="empty">Nothing on the tab yet.</div>`;
-    const members = state.members.map((m, i) => `<div class="row">${av(m, i)}<div class="t"><div class="title">${esc(m.name)}${m.id === you ? '<span class="you">you</span>' : ""}</div><div class="line">${m.inHousehold ? "Cohabit" : "Friend"}</div></div></div>`).join("");
+    // v102: a friend who is a couple counts as two in an even split
+    const members = state.members.map((m, i) => `<div class="row">${av(m, i)}<div class="t"><div class="title">${esc(m.name)}${m.id === you ? '<span class="you">you</span>' : ""}</div><div class="line">${m.inHousehold ? "Cohabit" : "Friend"}${m.people > 1 ? " · " + m.people + " people" : ""}</div></div></div>`).join("");
     app.innerHTML = `
       <div class="eyebrow">${esc(state.household)}’s tab</div>
       <h1>${esc(state.tab.name)}</h1>
-      ${state.tab.dates ? `<p class="sub">${esc(state.tab.dates)}</p>` : ""}
+      ${ongoing ? `<p class="sub">Ongoing. Settle any time.</p>` : state.tab.dates ? `<p class="sub">${esc(state.tab.dates)}</p>` : ""}
       ${hero}
       ${mine.length ? `<div class="eyebrow">Settle</div><div class="card">${balanceRows}</div>` : ""}
       ${otherRows ? `<div class="eyebrow">Between the others</div><div class="card">${otherRows}</div>` : ""}
@@ -193,18 +203,24 @@
       ${paidRows ? `<div class="eyebrow">Payments</div><div class="card">${paidRows}</div>` : ""}
       <div class="eyebrow">Who’s on it</div>
       <div class="card">${members}</div>
-      ${/iPhone|iPad|iPod/.test(navigator.userAgent) ? `<div class="cta">
+      ${ios ? `<div class="cta">
         <h3>Have Cohabit?</h3>
-        <p>Open this tab in the app to add your own card charges to it — only your part counts in your budget.</p>
+        <p>Open ${esc(state.tab.name)} in the app. It joins your Group tabs, you’ll hear when something changes, and you can add your own card charges to it. Only your part counts in your budget.</p>
         <a class="primary" href="cohabit://tab/${esc(token)}">Open in Cohabit</a>
-      </div>` : ""}
-      <div class="cta">
-        <h3>${mine.length ? "Tabs like this, without the chasing" : "Square — nice."}</h3>
+        ${getApp ? `<div class="steps"><b>New to Cohabit?</b> <a href="${esc(getApp)}" id="getApp" style="color:var(--brand-ink);font-weight:800;text-decoration:none">Get the app</a>, sign up, then come back to this link and tap Open in Cohabit to land on ${esc(state.tab.name)}. We copy the link for you, so you can also paste it in Cohabit under Settle → Group tabs → Join with a link.</div>` : ""}
+      </div>` : `<div class="cta">
+        <h3>${mine.length ? "Tabs like this, without the chasing" : "You’re all square."}</h3>
         <p>Cohabit splits the bills with the people you live with, and keeps tabs like ${esc(state.tab.name)} with friends. It never moves your money. Free on iPhone.</p>
-        ${cfg.getAppUrl ? `<a class="ghost-link" href="${esc(cfg.getAppUrl)}">Get Cohabit</a>` : ""}
-      </div>`;
+        ${getApp ? `<a class="ghost-link" href="${esc(getApp)}" id="getApp">Get Cohabit</a>` : ""}
+      </div>`}`;
+    document.title = state.tab.name + " · Cohabit";
+    // v98: the link goes with them to the App Store, so the app can take them straight to the tab
+    document.getElementById("getApp")?.addEventListener("click", () => {
+      try { navigator.clipboard && navigator.clipboard.writeText(location.href); } catch (e) {}
+    });
     document.getElementById("add")?.addEventListener("click", () => openForm(null));
     app.querySelectorAll("[data-settle]").forEach((b) => b.addEventListener("click", () => openPay(mine[Number(b.dataset.settle)])));
+    app.querySelectorAll("[data-remind]").forEach((b) => b.addEventListener("click", () => remind(mine[Number(b.dataset.remind)])));
     app.querySelectorAll("[data-unsettle]").forEach((b) => b.addEventListener("click", async () => {
       if (!confirm("Take back this payment?")) return;
       try { state = await call({ action: "unsettle", settleUpId: b.dataset.unsettle }); render(); toast("Taken back"); } catch (e) { toast(e.message); }
@@ -212,11 +228,25 @@
     app.querySelectorAll("[data-edit]").forEach((b) => b.addEventListener("click", () => openForm(state.expenses.find((x) => x.id === b.dataset.edit))));
   }
 
+  // v103: a reminder — the server pushes it when it can (once a day for them on this tab); else your own message
+  async function remind(p) {
+    if (!p) return;
+    try {
+      const r = await call({ action: "remind", from: p.from });
+      state = r; render();
+      if (r.remind === "sent") return toast("Reminded " + nameOf(p.from));
+      if (r.remind === "already today") return toast("Already reminded today. Try again tomorrow.");
+      const text = `A reminder about ${state.tab.name}: you owe me ${money(p.amountCents)}.`;
+      if (navigator.share) { navigator.share({ text }).catch(() => {}); return; }
+      try { await navigator.clipboard.writeText(text); toast("Copied. Send it to " + nameOf(p.from) + "."); } catch (e) { toast(text); }
+    } catch (e) { toast(e.message); }
+  }
+
   const dlg = document.getElementById("dlg"), form = document.getElementById("form");
   const f = (id) => document.getElementById(id);
   function openForm(x) {
     editing = x;
-    f("dlgTitle").textContent = x ? "Change this expense" : "Add what you paid";
+    f("dlgTitle").textContent = x ? "Edit expense" : "New expense";
     f("fTitle").value = x ? x.title : "";
     f("fAmount").value = x ? (x.amountCents / 100).toFixed(2) : "";
     f("fPaid").innerHTML = state.members.map((m) => `<option value="${esc(m.id)}"${(x ? x.paidBy : state.you) === m.id ? " selected" : ""}>${esc(m.id === state.you ? "Me" : m.name)}</option>`).join("");
@@ -227,7 +257,9 @@
     f("fDelete").style.display = x ? "" : "none";
     // a changed amount is split again among the same people (all of them, for a new one)
     const n = x ? Object.keys(x.parts || {}).length : state.members.length;
-    f("fHint").textContent = n === state.members.length ? "Split evenly between everyone on the tab." : `Split evenly between the ${n} people on it.`;
+    // v102: by people — a friend who is a couple takes two shares
+    const couples = state.members.some((m) => m.people > 1);
+    f("fHint").textContent = (n === state.members.length ? "Split evenly between everyone on the tab." : `Split evenly between the ${n} on it.`) + (couples ? " A couple counts as two." : "");
     dlg.showModal();
     setTimeout(() => f("fTitle").focus(), 50);
   }
@@ -274,7 +306,7 @@
     };
     f("payHint").textContent = iOwe
       ? (h ? "Opens their app with the amount. Then record it here so the tab knows." : "Pay however you usually do, then record it here so the tab knows. Cohabit never moves money.")
-      : "Only once the money’s with you — it comes off what they owe.";
+      : "Only once the money’s with you. It comes off what they owe.";
     f("pAmount").value = (p.amountCents / 100).toFixed(2);
     f("pSave").textContent = iOwe ? "I’ve paid" : "They’ve paid";
     pay.showModal();
@@ -290,7 +322,7 @@
       state = await call({ action: "settle", from: paying.from, to: paying.to, amountCents: cents });
       pay.close(); render();
       const square = !state.pairs.some((p) => p.from === state.you || p.to === state.you);
-      toast(square ? "Recorded — you’re square" : "Recorded");
+      toast(square ? "Recorded. You’re square." : "Recorded");
     } catch (e) { toast(e.message); } finally { f("pSave").disabled = false; }
   });
 

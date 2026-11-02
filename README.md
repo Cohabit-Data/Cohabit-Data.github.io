@@ -4,10 +4,11 @@ Four pages Apple and Plaid need before real banks and outside testers:
 
 | Path | Why |
 |---|---|
-| `/.well-known/apple-app-site-association` | Lets `https://<site>/plaid/…` open the app (Plaid requires a universal link for OAuth banks: Chase, Amex, Capital One…). The app id is the Team ID + the bundle id. Not used by the pilot (Hosted Link returns to the app by itself); only needed for the universal-link upgrade, which also needs the Associated Domains capability in Xcode. |
+| `/.well-known/apple-app-site-association` | Lets `https://<site>/plaid/…` open the app: Plaid's redirect URI, which banks that sign in through their own app (Chase, for example) return to. The app id is the Team ID + the bundle id; the app has the Associated Domains entitlement (v93). |
 | `/plaid/oauth/` | The redirect URI registered with Plaid; shown only if the app didn't open. |
 | `/privacy/` | Privacy policy URL for App Store Connect and Plaid (made from `PRIVACY.md`). |
 | `/support/` | Support URL for App Store Connect. |
+| `/terms/` | v104: short terms of use (App Store Connect's license agreement can stay Apple's standard one). |
 | `/security/` | A public summary of `SECURITY.md` (the policy's version is named on the page; update both together). |
 | `/invite/` | v72: where household and Pip-friend invites land (`#join=CODE`, `#pip=CODE`): how to get Cohabit (the Get-the-app link in `tab/config.js`), then the code to enter, and a button that opens the app if it's there. |
 | `/tab/` | v44: a friend's view of a shared tab (no app): what's owed, add what they paid. Fill in `tab/config.js` (project ref, the Get-the-app link). The app needs `COHABIT_SITE_HOST` set to this site's host. |

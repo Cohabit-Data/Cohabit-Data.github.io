@@ -66,9 +66,9 @@
 
   var words = kind === "join"
     ? { badge: "🏠", title: "You’re invited to share a home in Cohabit", sub: "Track what you share, see who owes what, and settle up in a tap. Your own spending stays yours.",
-        last: "Open Cohabit, tap <b>Join with a code</b>", open: "cohabit://join/" + code, openLabel: "I have Cohabit — open the invite" }
-    : { badge: "🐣", title: "Come be Pip friends", sub: "Visit each other’s Pip, send a hug or a high five, and keep a streak going. Friends never see anyone’s money.",
-        last: "In Cohabit, go to <b>Goals → Pip</b> and add a friend", open: "cohabit://pip/" + code, openLabel: "I have Cohabit — add this friend" };
+        last: "Open Cohabit, tap <b>Join with a code</b>", open: "cohabit://join/" + code, openLabel: "Open the invite in Cohabit" }
+    : { badge: "🐣", title: "Come be Pip pals", sub: "Visit each other’s Pip, send a hug or a high five, and keep a streak going. Friends never see anyone’s money.",
+        last: "In Cohabit, go to <b>Goals → Pip</b> and add a friend", open: "cohabit://pip/" + code, openLabel: "Add this friend in Cohabit" };
 
   app.innerHTML =
     '<div class="badge" aria-hidden="true">' + words.badge + '</div>' +
@@ -80,7 +80,7 @@
         '<div class="code"><tt id="code">' + esc(pretty) + '</tt><button class="pill" id="copy" type="button">Copy</button></div></div></div>' +
     '</div>' +
     '<a class="secondary" href="' + esc(words.open) + '">' + words.openLabel + '</a>' +
-    '<p class="fine">Not expecting this? You can ignore it — nothing happens unless you enter the code.</p>';
+    '<p class="fine">Not expecting this? You can ignore it. Nothing happens unless you enter the code.</p>';
 
   var toast = document.getElementById("toast");
   document.getElementById("copy").addEventListener("click", function () {

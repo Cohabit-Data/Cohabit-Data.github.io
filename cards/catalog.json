@@ -1,6 +1,6 @@
 {
- "schema": 1,
- "asOf": "2026-10-08",
+ "schema": 2,
+ "asOf": "2026-10-29",
  "changes": [
   {
    "date": "2026-10-07",
@@ -25,6 +25,14 @@
   {
    "date": "2026-10-26",
    "what": "v90: closedToNew on cards no longer open to new applicants (closed, replaced or the pre-change version of a refreshed card); they can still be named as a card you hold, never suggested as a new one."
+  },
+  {
+   "date": "2026-10-29",
+   "what": "v101 (schema 2): a rule or credit can say when a change reached accounts opened before it (existingFrom / existingUntil; from / until are the dates for new accounts). Sapphire Reserve's 2025 refresh encoded: 10x hotels and car rentals and 5x flights through Chase Travel, 3x other travel until Jun 22, 2025 for new accounts and Oct 25, 2025 for older ones; 8x Chase Travel and 4x flights and hotels booked direct from then. Its refresh credits (dining, StubHub, Apple, Peloton) start Jun 23, 2025. Amex Gold's 2x prepaid hotels before Apr 30, 2026 added from its own note."
+  },
+  {
+   "date": "2026-11-01",
+   "what": "v108: choice categories list the options the app can count (choices, picks, choiceDefault); requires says who a card is for; forCustomersOf keeps a card for one company’s customers out of suggestions unless the household pays that company."
   }
  ],
  "valuationsNote": "Reference transfer values only. The app counts every point as 1 cent unless the household sets a value.",
@@ -81,7 +89,12 @@
     "https://www.nerdwallet.com/credit-cards/learn/making-the-most-of-amazon-com-prime-store-card",
     "https://www.doctorofcredit.com/amazon-prime-store-card-earn-5x-points-rather-5-still-worth-5-back/"
    ],
-   "checkedOn": "2026-10-08"
+   "checkedOn": "2026-10-08",
+   "requires": "Amazon only · needs Prime",
+   "forCustomersOf": [
+    "AMAZON",
+    "AMZN"
+   ]
   },
   {
    "id": "amex_blue_cash_everyday",
@@ -673,6 +686,13 @@
      "capCents": 2500000,
      "capPeriod": "calendar_year",
      "notes": "U.S. supermarkets; up to $25k/calendar yr then 1X."
+    },
+    {
+     "category": "hotels",
+     "rate": 2,
+     "rule": "portal_only",
+     "until": "2026-04-29",
+     "notes": "Prepaid hotels via Amex Travel, before the 5x of 2026-04-30."
     },
     {
      "category": "hotels",
@@ -2639,7 +2659,15 @@
      "capCents": 250000,
      "capPeriod": "quarterly",
      "notes": "One of: gas and EV charging (default), online shopping (incl. cable/internet/phone/streaming), dining, travel, drug stores, home improvement and furnishings. Changeable once per calendar month. The cap is shared with grocery.",
-     "capGroup": "shared0"
+     "capGroup": "shared0",
+     "choices": [
+      "gas",
+      "online_shopping",
+      "dining",
+      "travel",
+      "drugstore"
+     ],
+     "choiceDefault": "gas"
     },
     {
      "category": "grocery",
@@ -2898,7 +2926,12 @@
      "capCents": 5000000,
      "capPeriod": "calendar_year",
      "notes": "One of: gas and EV charging (default), office supply stores, travel, TV/telecom and wireless, computer services, business consulting services. Changeable once per calendar month. The cap is shared with dining.",
-     "capGroup": "shared0"
+     "capGroup": "shared0",
+     "choices": [
+      "gas",
+      "travel"
+     ],
+     "choiceDefault": "gas"
     },
     {
      "category": "dining",
@@ -5737,7 +5770,12 @@
     "https://creditcards.chase.com/cash-back-credit-cards/amazon",
     "https://www.nerdwallet.com/reviews/credit-cards/amazon-prime-rewards"
    ],
-   "checkedOn": "2026-10-08"
+   "checkedOn": "2026-10-08",
+   "requires": "5% needs Amazon Prime",
+   "forCustomersOf": [
+    "AMAZON",
+    "AMZN"
+   ]
   },
   {
    "id": "chase_sapphire_preferred",
@@ -5902,20 +5940,68 @@
    ],
    "earning": [
     {
+     "category": "hotels",
+     "rate": 10,
+     "rule": "portal_only",
+     "until": "2025-06-22",
+     "existingUntil": "2025-10-25",
+     "notes": "hotels via Chase Travel, before the 2025 refresh"
+    },
+    {
+     "category": "travel",
+     "rate": 10,
+     "rule": "portal_only",
+     "merchants": [
+      "HERTZ",
+      "AVIS",
+      "BUDGET",
+      "ENTERPRISE",
+      "NATIONAL CAR",
+      "ALAMO",
+      "SIXT",
+      "THRIFTY",
+      "DOLLAR RENT"
+     ],
+     "until": "2025-06-22",
+     "existingUntil": "2025-10-25",
+     "notes": "car rentals via Chase Travel, before the 2025 refresh"
+    },
+    {
+     "category": "flights",
+     "rate": 5,
+     "rule": "portal_only",
+     "until": "2025-06-22",
+     "existingUntil": "2025-10-25",
+     "notes": "flights via Chase Travel, before the 2025 refresh"
+    },
+    {
+     "category": "travel",
+     "rate": 3,
+     "until": "2025-06-22",
+     "existingUntil": "2025-10-25",
+     "notes": "all other travel, however booked, before the 2025 refresh"
+    },
+    {
      "category": "travel",
      "rate": 8,
      "rule": "portal_only",
-     "notes": "Chase Travel incl. The Edit (FROSCH/Valerie Wilson excluded)"
+     "notes": "Chase Travel incl. The Edit (FROSCH/Valerie Wilson excluded); since the 2025 refresh",
+     "from": "2025-06-23",
+     "existingFrom": "2025-10-26"
     },
     {
      "category": "flights",
      "rate": 4,
-     "notes": "booked direct with airlines"
+     "notes": "booked direct with airlines; since the 2025 refresh",
+     "from": "2025-06-23",
+     "existingFrom": "2025-10-26"
     },
     {
      "category": "hotels",
      "rate": 4,
-     "notes": "booked direct with hotels"
+     "notes": "booked direct with hotels; since the 2025 refresh",
+     "from": "2025-06-23",
+     "existingFrom": "2025-10-26"
     },
     {
      "category": "dining",
@@ -5995,6 +6081,7 @@
      ],
      "enrollment": true,
      "notes": "$150 Jan-Jun + $150 Jul-Dec at Sapphire Reserve Exclusive Tables restaurants (OpenTable); benefit runs through 6/30/2030. Posts as the restaurant name.",
+     "from": "2025-06-23",
      "until": "2030-06-30",
      "how": "statement",
      "postsAsMerchant": true
@@ -6010,6 +6097,7 @@
      ],
      "enrollment": true,
      "notes": "$150 Jan-Jun + $150 Jul-Dec; through 12/31/2027.",
+     "from": "2025-06-23",
      "until": "2027-12-31",
      "how": "statement"
     },
@@ -6025,7 +6113,8 @@
      ],
      "enrollment": true,
      "notes": "Complimentary Apple TV + Apple Music (Chase values at $288/yr); activate by 6/22/2027, at least 12 months from activation. Not a statement credit.",
-     "how": "perk"
+     "how": "perk",
+     "from": "2025-06-23"
     },
     {
      "id": "lyft_in_app_credit",
@@ -6064,6 +6153,7 @@
      ],
      "enrollment": true,
      "notes": "Up to $120/yr toward Peloton memberships, through 12/31/2027.",
+     "from": "2025-06-23",
      "until": "2027-12-31",
      "how": "statement"
     },
@@ -6110,8 +6200,8 @@
      "how": "unlock"
     }
    ],
-   "feeNotes": "$795 (raised from $550 in the June 2025 overhaul: new accounts 6/23/2025, existing at renewals from 10/26/2025). Authorized users $195 each.",
-   "earningNotes": "10x total on Peloton hardware/accessories over $150 (up to $5,000 total purchases), 4/1/2025-12/31/2027. Points Boost: up to 2x value on select Chase Travel redemptions.",
+   "feeNotes": "$795 (raised from $550 in the June 2025 overhaul: new accounts 6/23/2025, existing at renewals from 10/26/2025). Authorized users $195 each. The app holds the current fee only.",
+   "earningNotes": "2025 refresh: new accounts from Jun 23, 2025, accounts opened before then from Oct 26, 2025. 10x total on Peloton hardware/accessories over $150 (up to $5,000 total purchases), 4/1/2025-12/31/2027. Points Boost: up to 2x value on select Chase Travel redemptions.",
    "sources": [
     "https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve",
     "https://www.nerdwallet.com/reviews/credit-cards/chase-sapphire-reserve"
@@ -8508,7 +8598,11 @@
     "https://www.citi.com/credit-cards/citi-costco-anywhere-visa-credit-card",
     "https://www.nerdwallet.com/reviews/credit-cards/costco-anywhere-visa"
    ],
-   "checkedOn": "2026-10-08"
+   "checkedOn": "2026-10-08",
+   "requires": "Needs a Costco membership",
+   "forCustomersOf": [
+    "COSTCO"
+   ]
   },
   {
    "id": "citi_custom_cash",
@@ -8626,7 +8720,12 @@
     {
      "category": "choice_3pct",
      "rate": 3,
-     "notes": "Self-Select category: fitness clubs, select streaming (default), live entertainment, cosmetic stores/barber/salons, or pet supply stores; changeable once per calendar quarter"
+     "notes": "Self-Select category: fitness clubs, select streaming (default), live entertainment, cosmetic stores/barber/salons, or pet supply stores; changeable once per calendar quarter",
+     "choices": [
+      "streaming",
+      "entertainment"
+     ],
+     "choiceDefault": "streaming"
     },
     {
      "category": "dining",
@@ -8902,7 +9001,11 @@
     "https://www.citi.com/credit-cards/citi-costco-anywhere-visa-business-credit-card",
     "https://thepointsguy.com/credit-cards/costco-anywhere-visa-business-review/"
    ],
-   "checkedOn": "2026-10-08"
+   "checkedOn": "2026-10-08",
+   "requires": "Needs a Costco membership",
+   "forCustomersOf": [
+    "COSTCO"
+   ]
   },
   {
    "id": "discover_it_cash_back",
@@ -9098,7 +9201,8 @@
     "https://www.fidelity.com/spend-save/visa-signature-card",
     "https://www.nerdwallet.com/blog/credit-cards/fidelity-rewards-visa-signature-review/"
    ],
-   "checkedOn": "2026-10-08"
+   "checkedOn": "2026-10-08",
+   "requires": "Cash back goes into a Fidelity account"
   },
   {
    "id": "navy_federal_flagship_premier",
@@ -9171,7 +9275,8 @@
     "https://www.nerdwallet.com/credit-cards/news/navy-federal-flagship-premier",
     "https://upgradedpoints.com/news/navy-federal-flagship-premier-card-refresh"
    ],
-   "checkedOn": "2026-10-08"
+   "checkedOn": "2026-10-08",
+   "requires": "For Navy Federal members (military and their families)"
   },
   {
    "id": "navy_federal_flagship_rewards",
@@ -9220,7 +9325,8 @@
     "https://www.nerdwallet.com/credit-cards/news/navy-federal-flagship-premier",
     "https://upgradedpoints.com/news/navy-federal-flagship-premier-card-refresh"
    ],
-   "checkedOn": "2026-10-08"
+   "checkedOn": "2026-10-08",
+   "requires": "For Navy Federal members (military and their families)"
   },
   {
    "id": "navy_federal_cashrewards_plus",
@@ -9247,7 +9353,8 @@
     "https://navyfederal.org/loans-cards/credit-cards/cash-rewards",
     "https://www.nerdwallet.com/credit-cards/best/navy-federal-cards"
    ],
-   "checkedOn": "2026-10-08"
+   "checkedOn": "2026-10-08",
+   "requires": "For Navy Federal members (military and their families)"
   },
   {
    "id": "paypal_cashback_mastercard",
@@ -9385,7 +9492,8 @@
     "https://www.uscreditcardguide.com/robinhood-gold-credit-card",
     "https://frequentmiler.com/robinhood-platinum-credit-card-review/"
    ],
-   "checkedOn": "2026-10-08"
+   "checkedOn": "2026-10-08",
+   "requires": "Needs Robinhood Gold, $50 a year (counted as its fee)"
   },
   {
    "id": "target_circle_card",
@@ -9674,7 +9782,14 @@
      "rule": "quarterly_selection_required",
      "capCents": 200000,
      "capPeriod": "quarterly",
-     "notes": "Choose 2 of: cell phone providers, department stores, electronics stores, fast food, furniture stores, ground transportation, gyms/fitness, home utilities, movie theaters, select clothing stores, sporting goods, TV/internet/streaming. First $2,000 combined per quarter."
+     "notes": "Choose 2 of: cell phone providers, department stores, electronics stores, fast food, furniture stores, ground transportation, gyms/fitness, home utilities, movie theaters, select clothing stores, sporting goods, TV/internet/streaming. First $2,000 combined per quarter.",
+     "choices": [
+      "streaming",
+      "transit",
+      "entertainment"
+     ],
+     "picks": 2,
+     "capGroup": "choice5"
     },
     {
      "category": "travel",
@@ -9686,7 +9801,12 @@
      "category": "choice_2pct",
      "rate": 2,
      "rule": "quarterly_selection_required",
-     "notes": "Choose 1 of: gas and EV charging, grocery stores and grocery delivery, restaurants. Uncapped. Discount stores and wholesale clubs are excluded."
+     "notes": "Choose 1 of: gas and EV charging, grocery stores and grocery delivery, restaurants. Uncapped. Discount stores and wholesale clubs are excluded.",
+     "choices": [
+      "gas",
+      "grocery",
+      "dining"
+     ]
     },
     {
      "category": "everything_else",
@@ -9730,7 +9850,10 @@
      "capCents": 150000,
      "capPeriod": "quarterly",
      "notes": "One everyday category: wholesale clubs, gas and EV charging, or bills and home utilities. First $1,500 per quarter.",
-     "capGroup": "shared0"
+     "capGroup": "shared0",
+     "choices": [
+      "gas"
+     ]
     },
     {
      "category": "hotels",
@@ -10052,7 +10175,11 @@
     "https://www.verizon.com/about/node/928069",
     "https://www.nerdwallet.com/credit-cards/reviews/verizon-credit-card"
    ],
-   "checkedOn": "2026-10-08"
+   "checkedOn": "2026-10-08",
+   "requires": "For Verizon customers · paid in Verizon Dollars, for Verizon bills and devices",
+   "forCustomersOf": [
+    "VERIZON"
+   ]
   },
   {
    "id": "wells_fargo_active_cash",
