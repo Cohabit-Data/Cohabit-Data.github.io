@@ -1,6 +1,6 @@
 {
  "schema": 2,
- "asOf": "2026-10-29",
+ "asOf": "2026-11-03",
  "changes": [
   {
    "date": "2026-10-07",
@@ -33,6 +33,10 @@
   {
    "date": "2026-11-01",
    "what": "v108: choice categories list the options the app can count (choices, picks, choiceDefault); requires says who a card is for; forCustomersOf keeps a card for one company’s customers out of suggestions unless the household pays that company."
+  },
+  {
+   "date": "2026-11-03",
+   "what": "v116: a card that bonuses its own top categories says which of the app's categories it picks among (eligible), how many (picks) and over what stretch (capPeriod). World of Hyatt Business: its top three each calendar quarter (it was read as one a month); Venmo (pre-Oct 2026): 2% on the second category counts, as its terms say."
   }
  ],
  "valuationsNote": "Reference transfer values only. The app counts every point as 1 cent unless the household sets a value.",
@@ -8113,7 +8117,15 @@
     {
      "category": "top_category_auto",
      "rate": 2,
-     "notes": "top 3 spend categories each calendar quarter from: dining, shipping, airlines direct, local transit/commuting, social/search advertising, car rentals, gas, internet/cable/phone; computed at quarter end"
+     "notes": "top 3 spend categories each calendar quarter from: dining, shipping, airlines direct, local transit/commuting, social/search advertising, car rentals, gas, internet/cable/phone; computed at quarter end",
+     "picks": 3,
+     "capPeriod": "quarterly",
+     "eligible": [
+      "dining",
+      "flights",
+      "transit",
+      "gas"
+     ]
     },
     {
      "category": "everything_else",
@@ -10103,14 +10115,29 @@
      "category": "top_category_auto",
      "rate": 3,
      "capPeriod": "billing_cycle",
-     "notes": "Highest-spend eligible category each billing cycle; no cap."
+     "notes": "Highest-spend eligible category each billing cycle; no cap.",
+     "eligible": [
+      "dining",
+      "travel",
+      "grocery",
+      "gas",
+      "transit",
+      "entertainment"
+     ]
     },
     {
      "category": "top_category_auto",
      "rate": 2,
-     "rule": "restricted",
      "capPeriod": "billing_cycle",
-     "notes": "Second-highest eligible category each billing cycle."
+     "notes": "Second-highest eligible category each billing cycle.",
+     "eligible": [
+      "dining",
+      "travel",
+      "grocery",
+      "gas",
+      "transit",
+      "entertainment"
+     ]
     },
     {
      "category": "everything_else",
