@@ -3,5 +3,5 @@
 window.COHABIT = {
   functionsUrl: "https://xdagiktdxbetrkmqxcdt.supabase.co/functions/v1",
   // Where "Get Cohabit" goes: the App Store page, or TestFlight's public link during the pilot.
-  getAppUrl: "https://testflight.apple.com/join/XXXXXXXX",
+  getAppUrl: "https://testflight.apple.com/join/kkADNf9b",
 };
